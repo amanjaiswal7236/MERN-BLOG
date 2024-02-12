@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { signoutSuccess } from '../redux/user/userSlice.js'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux';
-
+import { HiAnnotation } from 'react-icons/hi';
 
 function DashSidebar() {
   const location = useLocation();
@@ -58,6 +58,14 @@ function DashSidebar() {
             <Link to='/dashboard?tab=users'>
               <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup} as='div'>
                 Users
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {currentUser.isAdmin && (
+            <Link to='/dashboard?tab=comments'>
+              <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                Comments
               </Sidebar.Item>
             </Link>
           )}

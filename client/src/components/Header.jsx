@@ -12,7 +12,7 @@ function Header() {
     const path = useLocation().pathname;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { currentUser } = useSelector(state => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const {theme} = useSelector(state => state.theme);
     const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();

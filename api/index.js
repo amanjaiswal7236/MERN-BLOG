@@ -5,13 +5,10 @@ import userRoutes from './routes/user.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import postRoutes from './routes/post.routes.js';
 import commentRoutes from './routes/comment.routes.js';
-
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
-const app = express();
-app.use(express.json());
 dotenv.config();
-app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
@@ -20,9 +17,12 @@ mongoose.connect(process.env.MONGO_URI)
   console.log(err)
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+const __dirname = path.resolve();
+
+const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/user',userRoutes);
 app.use('/api/auth',authRoutes);
@@ -33,6 +33,13 @@ app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
 
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
+
 app.use((err,req,res,next)=>{
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -40,6 +47,6 @@ app.use((err,req,res,next)=>{
     success:false,
     statusCode,
     message
-  })
+  });
 
-})
+});

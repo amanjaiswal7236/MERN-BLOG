@@ -32,7 +32,7 @@ function Signin() {
         dispatch(signInFailure(data.message));
       }
       if(res.ok){
-        dispatch(signInSuccess(data.user));
+        dispatch(signInSuccess(data));
         navigate('/');
       }
     } catch (error) {
